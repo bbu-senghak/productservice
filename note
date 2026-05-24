@@ -1,0 +1,5 @@
+
+- entity -> mapping model to table
+- dto
+  - Request -> transfer request -> to entity
+  - Response -> transfer entity -> response
