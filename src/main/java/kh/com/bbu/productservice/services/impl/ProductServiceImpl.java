@@ -6,6 +6,7 @@ import java.util.Optional;
 import kh.com.bbu.productservice.dto.request.ProductRequest;
 import kh.com.bbu.productservice.dto.response.ProductResponse;
 import kh.com.bbu.productservice.entities.ProductEntity;
+import kh.com.bbu.productservice.exceptions.ApiException;
 import kh.com.bbu.productservice.mappers.ProductMapper;
 import kh.com.bbu.productservice.repositories.CategoryRepository;
 import kh.com.bbu.productservice.repositories.ProductRepository;
@@ -43,7 +44,8 @@ public class ProductServiceImpl implements ProductService {
     public void createProduct(ProductRequest req) {
         var entity = productMapper.toEntity(req);
         entity.setCategory(
-            categoryRepository.findById(req.getCategoryId()).orElse(null)
+            categoryRepository.findById(req.getCategoryId())
+                .orElseThrow(() -> new ApiException("404", "Category not found"))
         );
         productRepository.save(entity);
     }

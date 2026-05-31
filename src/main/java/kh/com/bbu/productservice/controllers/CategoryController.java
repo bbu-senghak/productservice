@@ -1,8 +1,6 @@
 package kh.com.bbu.productservice.controllers;
 
 import kh.com.bbu.productservice.dto.request.CategoryRequest;
-import kh.com.bbu.productservice.exceptions.ApiException;
-import kh.com.bbu.productservice.exceptions.MessageResponse;
 import kh.com.bbu.productservice.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,14 +21,8 @@ public class CategoryController {
     public ResponseEntity<Object> createCategory(
         @RequestBody CategoryRequest request
     ){
-        try {
-            categoryService.createCategory(request);
-        }catch (ApiException e){
-            return new ResponseEntity<>(
-                new MessageResponse(null, false, e.getMessage(), e.getError())
-                , HttpStatus.OK);
-        }
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        categoryService.createCategory(request);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
