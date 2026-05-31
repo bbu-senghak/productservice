@@ -52,7 +52,8 @@ public class ProductServiceImpl implements ProductService {
     public void createProduct(ProductRequest req) {
         var entity = productMapper.toEntity(req);
         entity.setCategory(
-            categoryRepository.findById(req.getCategoryId()).orElse(null)
+            categoryRepository.findById(req.getCategoryId())
+                .orElseThrow(() -> new ApiException("404", "Category not found"))
         );
         productRepository.save(entity);
     }
